@@ -1,0 +1,139 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+type HelpResponse {
+  interpreter: Interpreter
+  link: String
+}
+
+type Interpreter {
+  available: Boolean
+  email: String
+  id: ID
+  name: String
+  skills: [Skill]
+}
+
+type InterpreterConnection {
+  items: [Interpreter]
+  nextToken: String
+}
+
+type Mutation {
+  createInterpreter(input: CreateInterpreterInput!): Interpreter
+  deleteInterpreter(input: DeleteInterpreterInput!): Interpreter
+  updateInterpreter(input: UpdateInterpreterInput!): Interpreter
+}
+
+type Query {
+  getHelp(minSkillLevel: SkillLevel, skillName: SkillName): HelpResponse
+  getInterpreter(id: ID!): Interpreter
+  listInterpreters(filter: TableInterpreterFilterInput, limit: Int, nextToken: String): InterpreterConnection
+}
+
+type Skill {
+  level: SkillLevel!
+  name: SkillName!
+}
+
+enum SkillLevel {
+  BASIC
+  FLUENT
+  NATIVE
+  PROFESSIONAL
+}
+
+enum SkillName {
+  TRANSLATION
+}
+
+input CreateInterpreterInput {
+  available: Boolean!
+  email: String!
+  name: String!
+  skills: [SkillInput]
+}
+
+input DeleteInterpreterInput {
+  id: ID!
+}
+
+input InterpreterActiveInput {
+  id: ID!
+}
+
+input SkillInput {
+  level: SkillLevel!
+  name: SkillName!
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableInterpreterFilterInput {
+  available: TableBooleanFilterInput
+  email: TableStringFilterInput
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input UpdateInterpreterInput {
+  available: Boolean
+  email: String
+  id: ID!
+  name: String
+}

@@ -1,11 +1,11 @@
 import { expect as expectCDK, matchTemplate, MatchStyle } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
-import Appsync = require('../lib/appsync-stack');
+import AppSyncStack = require('../lib/appsync-stack');
 
 test('Empty Stack', () => {
     const app = new cdk.App();
     // WHEN
-    const stack = new Appsync.AppsyncStack(app, 'MyTestStack');
+    const stack = new AppSyncStack.AppSyncStack(app, 'MyTestStack');
     // THEN
     expectCDK(stack).to(matchTemplate({
       "Resources": {}
