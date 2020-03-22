@@ -1,140 +1,131 @@
-schema {
-  query: Query
-  mutation: Mutation
-}
-
-type HelpResponse {
-  interpreter: Interpreter
-  link: String
-}
-
-type Interpreter {
-  available: Boolean
-  email: String
-  id: ID
-  name: String
-  skills: [Skill]
-}
-
-type InterpreterConnection {
-  items: [Interpreter]
-  nextToken: String
-}
-
-type Mutation {
-  createInterpreter(input: CreateInterpreterInput!): Interpreter
-  deleteInterpreter(input: DeleteInterpreterInput!): Interpreter
-  interpreterActive(input: InterpreterActiveInput!): Interpreter
-  updateInterpreter(input: UpdateInterpreterInput!): Interpreter
-}
-
-type Query {
-  getHelp(minSkillLevel: SkillLevel, skillName: SkillName): HelpResponse
-  getInterpreter(id: ID!): Interpreter
-  listInterpreters(filter: TableInterpreterFilterInput, limit: Int, nextToken: String): InterpreterConnection
-}
-
-type Skill {
-  level: SkillLevel
-  name: SkillName
-}
-
-enum SkillLevel {
-  BASIC
-  FLUENT
-  NATIVE
-  PROFESSIONAL
-}
-
-enum SkillName {
-  TRANSLATION
-}
-
-input CreateInterpreterInput {
-  available: Boolean
-  email: String
-  name: String
-  skills: [SkillInput]
+﻿input CreateInterpreterInput {
+    name: String!
+    available: Boolean!
+    email: String!
+    skills: [SkillInput]
 }
 
 input DeleteInterpreterInput {
-  id: ID!
+    id: ID!
 }
 
-input InterpreterActiveInput {
-  id: ID!
+type Interpreter {
+    id: ID
+    name: String
+    skills: [Skill]
+    available: Boolean
+    email: AWSEmail
+    videoLink: String
+}
+
+type InterpreterConnection {
+    items: [Interpreter]
+    nextToken: String
+}
+
+type Mutation {
+    createInterpreter(input: CreateInterpreterInput!): Interpreter
+    updateInterpreter(input: UpdateInterpreterInput!): Interpreter
+    deleteInterpreter(input: DeleteInterpreterInput!): Interpreter
+}
+
+type Query {
+    getHelp(skillName: SkillName, minSkillLevel: SkillLevel): Interpreter
+    getInterpreter(id: ID!): Interpreter
+    listInterpreters(
+        filter: TableInterpreterFilterInput
+        limit: Int
+        nextToken: String
+    ): InterpreterConnection
+}
+
+type Skill {
+    name: SkillName
+    level: SkillLevel
 }
 
 input SkillInput {
-  level: SkillLevel
-  name: SkillName
+    name: SkillName!
+    level: SkillLevel!
+}
+
+enum SkillLevel {
+    BASIC
+    FLUENT
+    PROFESSIONAL
+    NATIVE
+}
+
+enum SkillName {
+    TRANSLATION
 }
 
 input TableBooleanFilterInput {
-  eq: Boolean
-  ne: Boolean
+    ne: Boolean
+    eq: Boolean
 }
 
 input TableFloatFilterInput {
-  between: [Float]
-  contains: Float
-  eq: Float
-  ge: Float
-  gt: Float
-  le: Float
-  lt: Float
-  ne: Float
-  notContains: Float
+    ne: Float
+    eq: Float
+    le: Float
+    lt: Float
+    ge: Float
+    gt: Float
+    contains: Float
+    notContains: Float
+    between: [Float]
 }
 
 input TableIDFilterInput {
-  beginsWith: ID
-  between: [ID]
-  contains: ID
-  eq: ID
-  ge: ID
-  gt: ID
-  le: ID
-  lt: ID
-  ne: ID
-  notContains: ID
+    ne: ID
+    eq: ID
+    le: ID
+    lt: ID
+    ge: ID
+    gt: ID
+    contains: ID
+    notContains: ID
+    between: [ID]
+    beginsWith: ID
 }
 
 input TableIntFilterInput {
-  between: [Int]
-  contains: Int
-  eq: Int
-  ge: Int
-  gt: Int
-  le: Int
-  lt: Int
-  ne: Int
-  notContains: Int
+    ne: Int
+    eq: Int
+    le: Int
+    lt: Int
+    ge: Int
+    gt: Int
+    contains: Int
+    notContains: Int
+    between: [Int]
 }
 
 input TableInterpreterFilterInput {
-  available: TableBooleanFilterInput
-  email: TableStringFilterInput
-  id: TableIDFilterInput
-  name: TableStringFilterInput
+    id: TableIDFilterInput
+    name: TableStringFilterInput
+    available: TableBooleanFilterInput
+    email: TableStringFilterInput
 }
 
 input TableStringFilterInput {
-  beginsWith: String
-  between: [String]
-  contains: String
-  eq: String
-  ge: String
-  gt: String
-  le: String
-  lt: String
-  ne: String
-  notContains: String
+    ne: String
+    eq: String
+    le: String
+    lt: String
+    ge: String
+    gt: String
+    contains: String
+    notContains: String
+    between: [String]
+    beginsWith: String
 }
 
 input UpdateInterpreterInput {
-  available: Boolean
-  email: String
-  id: ID!
-  name: String
+    id: ID!
+    name: String
+    available: Boolean
+    email: String
+    videoLink: String
 }
