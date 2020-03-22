@@ -8,9 +8,8 @@ import {
 } from '@aws-cdk/aws-appsync';
 import { Table, BillingMode, AttributeType } from '@aws-cdk/aws-dynamodb';
 import { Function } from '@aws-cdk/aws-lambda';
-import { RemovalPolicy } from '@aws-cdk/core';
+import { RemovalPolicy, ValidationResult } from '@aws-cdk/core';
 import * as path from 'path';
-import { updateResolver } from './update-resolver';
 
 export class AppSyncStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -96,7 +95,9 @@ export class AppSyncStack extends cdk.Stack {
         interpreterDataSource.createResolver({
             typeName: 'Mutation',
             fieldName: 'updateInterpreter',
-            requestMappingTemplate: MappingTemplate.fromString(updateResolver),
+            requestMappingTemplate: MappingTemplate.fromFile(
+                path.join(__dirname, 'update-resolver.json')
+            ),
             responseMappingTemplate: MappingTemplate.dynamoDbResultItem(),
         });
 
