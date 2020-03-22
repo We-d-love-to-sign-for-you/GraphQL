@@ -1,15 +1,14 @@
 import * as cdk from '@aws-cdk/core';
+import * as path from 'path';
 import {
     GraphQLApi,
     MappingTemplate,
-    KeyCondition,
     PrimaryKey,
     Values,
 } from '@aws-cdk/aws-appsync';
 import { Table, BillingMode, AttributeType } from '@aws-cdk/aws-dynamodb';
 import { Function } from '@aws-cdk/aws-lambda';
-import { RemovalPolicy, ValidationResult } from '@aws-cdk/core';
-import * as path from 'path';
+import { RemovalPolicy } from '@aws-cdk/core';
 
 export class AppSyncStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -17,7 +16,7 @@ export class AppSyncStack extends cdk.Stack {
 
         const appSync = new GraphQLApi(this, `${id}-api`, {
             name: 'love2sign4you',
-            schemaDefinitionFile: './schema.graphql',
+            schemaDefinitionFile: path.join(__dirname, 'schema.graphql'),
         });
 
         const interpreterTable = new Table(this, `InterpreterTableCDK`, {
