@@ -19,3 +19,11 @@ diff:
     artifacts:
         paths:
             - ./target
+
+deploy:
+    stage: deploy
+    when: manual
+    script: npm run cdk deploy
+    artifacts:
+        paths:
+            - ./target
