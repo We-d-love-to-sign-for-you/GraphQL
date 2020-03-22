@@ -12,3 +12,10 @@ build:
     artifacts:
         paths:
             - ./target
+
+diff:
+    stage: test
+    script: npm run cdk diff
+    artifacts:
+        paths:
+            - ./target
