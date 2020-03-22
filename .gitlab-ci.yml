@@ -1,0 +1,31 @@
+image: node:latest
+
+cache:
+    paths:
+        - node_modules/
+
+default:
+    before_script:
+        - npm ci
+
+build:
+    stage: build
+    script: npm run build
+    artifacts:
+        paths:
+            - ./target
+
+diff:
+    stage: test
+    script: npm run cdk diff
+    artifacts:
+        paths:
+            - ./target
+
+deploy:
+    stage: deploy
+    when: manual
+    script: npm run cdk deploy
+    artifacts:
+        paths:
+            - ./target
