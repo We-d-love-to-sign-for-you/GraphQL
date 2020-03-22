@@ -4,11 +4,13 @@ cache:
     paths:
         - node_modules/
 
+default:
+    before_script:
+        - npm ci
+
 build:
     stage: build
-    script:
-        - npm ci
-        - npm run build
+    script: npm run build
     artifacts:
         paths:
             - ./target
