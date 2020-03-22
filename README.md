@@ -45,11 +45,9 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+It is connecting hard of hearing people in need of a translator with members of the community that are able to translate sign language into spoken language and vice versa.
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`We-d-love-to-sign-for-you`, `GraphQL`, `twitter_handle`, `email`
+_This project was developed during the [Hackathon #WirVsVirus 2020](https://wirvsvirushackathon.org/)._
 
 ### Built With
 
@@ -58,6 +56,7 @@ Here's a blank template to get started:
 -   [AWS AppSync](https://aws.amazon.com/appsync/)
 -   [AWS Lambda](https://aws.amazon.com/lambda/)
 -   [AWS DynamoDB](https://aws.amazon.com/dynamodb/)
+-   [jitsi](https://jitsi.org/)
 
 <!-- GETTING STARTED -->
 
