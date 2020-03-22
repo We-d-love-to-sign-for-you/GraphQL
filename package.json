@@ -4,8 +4,7 @@
     "version": "1.0.0",
     "author": {
         "email": "david@kagerer.co",
-        "name": "David Kagerer",
-        "url": "https://www.linkedin.com/in/dkagerer/"
+        "name": "David Kagerer"
     },
     "bin": {
         "appsync": "bin/appsync.js"
