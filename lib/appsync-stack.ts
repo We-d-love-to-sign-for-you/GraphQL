@@ -5,18 +5,31 @@ import {
     MappingTemplate,
     PrimaryKey,
     Values,
+    AuthorizationConfig,
 } from '@aws-cdk/aws-appsync';
 import { Table, BillingMode, AttributeType } from '@aws-cdk/aws-dynamodb';
 import { Function } from '@aws-cdk/aws-lambda';
 import { RemovalPolicy } from '@aws-cdk/core';
+import { Group, Policy } from '@aws-cdk/aws-iam';
+import { Bucket, BucketAccessControl } from '@aws-cdk/aws-s3';
 
 export class AppSyncStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
+        const deployGroup = new Group(this, `${id}-deploy-group`, {
+            groupName: `${id}-deploy-group`,
+        });
+
         const appSync = new GraphQLApi(this, `${id}-api`, {
             name: 'love2sign4you',
             schemaDefinitionFile: path.join(__dirname, 'schema.graphql'),
+            authorizationConfig: {
+                defaultAuthorization: {
+                    apiKeyDesc: 'ChatBot',
+                    expires: '2020-06-01T12:00:00+00:00',
+                },
+            },
         });
 
         const interpreterTable = new Table(this, `InterpreterTableCDK`, {
@@ -28,6 +41,14 @@ export class AppSyncStack extends cdk.Stack {
                 type: AttributeType.STRING,
             },
         });
+
+        const bucket = new Bucket(this, `${id}-bucket`, {
+            bucketName: id,
+            removalPolicy: RemovalPolicy.DESTROY,
+        });
+        bucket.grantPublicAccess('public/*');
+
+        bucket.grantReadWrite(deployGroup, 'public/*');
 
         const schedulerLambda = Function.fromFunctionArn(
             this,
